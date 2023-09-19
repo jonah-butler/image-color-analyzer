@@ -42,7 +42,7 @@ var IMAGE, CANVAS, CONTEXT;
 // just a dummy src for now
 var SRC = "https://dev-blog-resources.s3.amazonaws.com/canvas_1691764016404.png";
 var initialize = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var data;
+    var data, cd;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -59,8 +59,11 @@ var initialize = function () { return __awaiter(void 0, void 0, void 0, function
                 setCanvasHeightAndWidth();
                 console.log("IMAGE: ", IMAGE);
                 CONTEXT === null || CONTEXT === void 0 ? void 0 : CONTEXT.drawImage(IMAGE, 0, 0, CANVAS.width, CANVAS.height);
-                data = CONTEXT === null || CONTEXT === void 0 ? void 0 : CONTEXT.getImageData(0, 0, CANVAS.width, CANVAS.height);
-                console.log(data);
+                data = CONTEXT === null || CONTEXT === void 0 ? void 0 : CONTEXT.getImageData(0, 0, CANVAS.width, CANVAS.height).data;
+                if (data) {
+                    cd = medianColorBlend(data);
+                    console.log("rgba(".concat(cd.r, ", ").concat(cd.g, ", ").concat(cd.b, ", ").concat(cd.a, ")"));
+                }
                 return [2 /*return*/];
         }
     });
@@ -68,5 +71,26 @@ var initialize = function () { return __awaiter(void 0, void 0, void 0, function
 var setCanvasHeightAndWidth = function () {
     CANVAS.width = IMAGE.width;
     CANVAS.height = IMAGE.height;
+};
+var medianColorBlend = function (d) {
+    var r = 0;
+    var g = 0;
+    var b = 0;
+    var a = 255;
+    for (var i = 0; i < d.length; i += 4) {
+        r += d[i];
+        g += d[i + 1];
+        b += d[i + 2];
+    }
+    console.log(r, g, b);
+    r = Math.floor(r / d.length);
+    g = Math.floor(g / d.length);
+    b = Math.floor(b / d.length);
+    return {
+        r: r,
+        g: g,
+        b: b,
+        a: a,
+    };
 };
 initialize();
