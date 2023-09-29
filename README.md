@@ -46,7 +46,7 @@ Description: _returns a single blend of all pixel color values_
 ### 📦 Returns
 
 ```typescript
-<RGBARecord>
+<RGBARecord>;
 
 interface RGBARecord {
   r: number;
@@ -87,7 +87,7 @@ palette.dominant(imgData);
 ### 📦 Returns
 
 ```typescript
-<RGBARecord>
+<RGBARecord>;
 
 interface RGBARecord {
   r: number;
@@ -178,7 +178,7 @@ palette.extractImageDataFromSrc(imgData);
 ### 📦 Returns
 
 ```
-<Uint8ClampedArray>
+<Uint8ClampedArray>;
 ```
 
 ---
@@ -211,19 +211,18 @@ palette.monochromatic(imgData);
 ### 📦 Returns
 
 ```typescript
-
-<MonoChromatic>
+<MonoChromatic>;
 
 interface RGBARecord {
   r: number;
   g: number;
   b: number;
   a: number;
-}
+};
 
 interface MonoChromatic {
   light: RGBARecord[];
   dark: RGBARecord[];
   original: RGBARecord;
-}
+};
 ```
