@@ -211,6 +211,7 @@ palette.monochromatic(imgData);
 ### 📦 Returns
 
 ```typescript
+
 <MonoChromatic>
 
 interface RGBARecord {
