@@ -28,7 +28,7 @@ const palette = {
     let g = 0;
     let b = 0;
 
-    const a = 255;
+    const a = 1;
 
     for (let i = 0; i < d.length; i += 4) {
       r += d[i];
@@ -62,7 +62,7 @@ const palette = {
       g = 0,
       b = 0;
 
-    const a = 255;
+    const a = 1;
 
     // get each pixel and set each RGB value
     // as the key in the totals record and
@@ -211,7 +211,7 @@ const palette = {
     const monoChromaticPalette: MonoChromatic = {
       light: [],
       dark: [],
-      original: { r: rgb.r, g: rgb.g, b: rgb.b, a: 255 },
+      original: { r: rgb.r, g: rgb.g, b: rgb.b, a: 1 },
     };
 
     darkVals.forEach((n) => {
@@ -221,7 +221,7 @@ const palette = {
         r: rgb[0],
         g: rgb[1],
         b: rgb[2],
-        a: 255,
+        a: 1,
       });
     });
 
@@ -232,7 +232,7 @@ const palette = {
         r: rgb[0],
         g: rgb[1],
         b: rgb[2],
-        a: 255,
+        a: 1,
       });
     });
 
@@ -291,7 +291,7 @@ const getRGBValues = (d: Uint8ClampedArray): RGBARecord[] => {
       r: d[i],
       g: d[i + 1],
       b: d[i + 2],
-      a: 255,
+      a: 1,
     });
   }
   return rgbaVals;
@@ -310,7 +310,7 @@ const quantizeRGB = (
         p.b += c.b;
         return p;
       },
-      { r: 0, g: 0, b: 0, a: 255 }
+      { r: 0, g: 0, b: 0, a: 1 }
     );
 
     return [
