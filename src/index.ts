@@ -117,7 +117,7 @@ const palette = {
     startingDepth = 0,
     maxDepth = 2
   ): RGBARecord[] {
-    if (startingDepth <= maxDepth) {
+    if (startingDepth >= maxDepth) {
       throw new Error(
         "startingDepth param must be initialized to a value lower than the maxDepth parameter"
       );
