@@ -8,8 +8,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "image",
+    "color",
+    "palette",
+    "median cut"
+  ],
+  "author": "jonah butler <jonahbutler@jonahbutler.dev>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonah-butler/palette"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.6.2",
