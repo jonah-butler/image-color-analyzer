@@ -141,7 +141,7 @@ interface RGBARecord {
 
 Type: `Function`
 
-Description: _returns the most reocurring pixel color_
+Description: _a utility function that extracts image data through writing an image source into a canvas context_
 
 ⚙️ Params
 
