@@ -238,6 +238,27 @@ const palette = {
 
     return monoChromaticPalette;
   },
+
+  complimentary(rgb: { r: number; g: number; b: number }): RGBARecord {
+    const hsl = RGBToHSL(rgb.r, rgb.g, rgb.b);
+    const hue = hsl[0];
+    let invertedHue: number;
+
+    if (hue >= 180) {
+      invertedHue = hue - 180;
+    } else {
+      invertedHue = hue + 180;
+    }
+
+    const newRGB = HSLToRGB(invertedHue, hsl[1], hsl[2]);
+
+    return {
+      r: newRGB[0],
+      g: newRGB[1],
+      b: newRGB[2],
+      a: 1,
+    };
+  },
 };
 
 //////////////////////////////////
