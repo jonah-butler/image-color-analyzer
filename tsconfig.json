@@ -1,15 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": ["es5", "dom"],
-    "allowJs": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "rootDir": "src",
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "declaration": true,
-    "resolveJsonModule": true
+    "declaration": true
   }
 }

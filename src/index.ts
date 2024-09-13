@@ -145,13 +145,16 @@ const palette = {
    */
   async extractImageDataFromSrc(
     src: string,
-    sizeDividend: number = 1
-  ): Promise<Uint8ClampedArray | undefined | Error> {
+    sizeDividend: number = 1,
+    anonymousOrigin = true,
+  ): Promise<Uint8ClampedArray> {
     const IMAGE = new Image();
     const CANVAS = document.createElement("canvas");
     const CONTEXT = CANVAS.getContext("2d");
 
-    IMAGE.crossOrigin = "anonymous";
+    if(anonymousOrigin) {
+      IMAGE.crossOrigin = "anonymous";
+    }
     IMAGE.src = src;
 
     try {
@@ -162,10 +165,24 @@ const palette = {
 
       CONTEXT?.drawImage(IMAGE, 0, 0, CANVAS.width, CANVAS.height);
 
-      return CONTEXT?.getImageData(0, 0, CANVAS.width, CANVAS.height).data;
+      const imageData = CONTEXT?.getImageData(0, 0, CANVAS.width, CANVAS.height).data;
+      if (imageData !== undefined) {
+        return imageData;
+      }
+      throw new Error("Failed to decode provided image source");
     } catch {
       throw new Error(`Failed to decode the provided image src: ${src}`);
     }
+  },
+
+  complementary(color: RGBARecord): string {
+    const hsl = RGBToHSL(color.r, color.g, color.b);
+    let complementary = "";
+    for(let i = 180; i <= 180; i+= 1) {
+      const h1 = (hsl[0] + i) % 360;
+      complementary = `hsl(${h1.toFixed(2)}, ${hsl[1].toFixed(2)}%, ${hsl[2].toFixed(2)}%)`;
+    }
+    return complementary;
   },
 
   /**
@@ -238,6 +255,40 @@ const palette = {
 
     return monoChromaticPalette;
   },
+
+  hexToRGBARecord (hex: string): RGBARecord {
+    if(hex[0] === "#") {
+      hex = hex.slice(1);
+    }
+
+    var bigint = parseInt(hex, 16);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+
+    return {
+      r,
+      g,
+      b,
+      a: 1,
+    }
+},
+
+rgbToRGBARecord(rgb: string): RGBARecord {
+  const split = rgb.substring(4, rgb.length - 1);
+  if (split.length < 3) {
+    throw new Error("malformed rgb string");
+  }
+
+  const [r, g, b, a] = split;
+  
+  return {
+    r: parseInt(r),
+    g: parseInt(g),
+    b: parseInt(b),
+    a: a ? parseInt(a) : 1,
+  };
+}
 };
 
 //////////////////////////////////
@@ -368,4 +419,8 @@ const findDominantColorRange = (rgbaRecords: RGBARecord[]): string => {
   return "b";
 };
 
+export {
+  RGBARecord,
+  MonoChromatic,
+};
 export default palette;

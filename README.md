@@ -99,6 +99,53 @@ interface RGBARecord {
 
 ---
 
+### 🔨 `hexToRGBARecord`
+
+Type: `Function`
+
+Description: _accepts a hex string and converts it to the type <RGBARecord>_
+
+⚙️ Params
+
+- hex `<string>`
+
+### 🛠️ Usage
+
+```typescript
+const hex = "#ff7236";
+const converted = palette.hexToRGBARecord(hex);
+
+console.log(converted);
+// { r: 255, g: 114, b: 54, a: 1 }
+```
+---
+
+### 🔨 `rgbToRGBARecord`
+
+Type: `Function`
+
+Description: _accepts an rgb or rgba color strings and converts it to the type <RGBARecord>_
+
+⚙️ Params
+
+- rgb(a) `<string>`
+
+### 🛠️ Usage
+
+```typescript
+const rgb = "rgb(12, 45, 111)";
+const rgba = "rgba(12, 45, 111, 1)";
+
+const converted1 = palette.rgbToRGBARecord(rgb);
+const converted2 = palette.rgbToRGBARecord(rgb);
+
+console.log(converted1);
+// { r: 12, g: 45, b: 111, a: 1 }
+console.log(converted2);
+// { r: 12, g: 45, b: 111, a: 1 }
+```
+---
+
 ### 🎨 `quantize`
 
 Type: `Function`
@@ -148,6 +195,8 @@ Description: _a utility function that extracts image data through writing an ima
 - src `<string>`
   - an image src
 - sizeDividend `<number>`
+- anonymousOrigin `<boolean>`
+  - flag for setting crossoriginAnonymous to the canvas image source. Defaults to true.
 
   - default set to `1`
   - this is primarily for making the median cut algorithm more performant by reducing image size while keeping aspect ration in tact. Very large images require a lot of processing, so supplying a size dividend can speed up this palette generating process while keeping the final palette that is generated mostly unaffected within reason.
@@ -183,6 +232,35 @@ palette.extractImageDataFromSrc(imgData);
 
 ---
 
+### 🎨 `complementary`
+
+Type: `Function`
+
+Description: _accepts an RGBA record and calculates that color's complimentary counterpart_
+
+⚙️ Params
+
+- color `<RGBARecord>`
+
+### 🛠️ Usage
+
+```typescript
+const hex = "#ff7236";
+const converted = palette.hexToRGBARecord(hex);
+
+const complementary = palette.complementary(converted);
+
+console.log(complementary);
+// 'hsl(197.91, 100.00%, 60.59%)'
+```
+
+### 📦 Returns
+
+```typescript
+<string>: ex.'hsl(12, 20%, 50%)'
+```
+---
+
 ### 🎨 `monochromatic`
 
 Type: `Function`
@@ -191,8 +269,8 @@ Description:_returns a monochromatic object with colors ranginng in a spectrum f
 
 ⚙️ Params
 
-- d `<Uint8ClampedArray>`
-  - value returned from a canvas context calling `.getImageData().data`
+- percent: <number>
+  - the percentage value used in shifting the lightness value of provided RGB value
 - numOfColors: <number>
   - default set to `4`
   - the amount of returned monochromatic colors
